@@ -7,22 +7,16 @@ import controller.Controller;
 public class FrontPage {
 	Scanner sc;
 	PageUtils pu;
-	String[] options = {
-		"게시판  ", "로그인  ", "회원가입 "	
-	};
-	
+	String[] options = { "게시판  ", "로그인  ", "회원가입 " };
 	public FrontPage() {
 		sc = new Scanner(System.in);
 		pu = new PageUtils();
 		init();
 		sc.close();
 	}
-
 	private void init() {
-
 		System.out.println(pu.getTitle());
 		System.out.println(pu.getMenu(options));
-
 		while (true) {
 			switch (sc.nextInt()) {
 			case 1:

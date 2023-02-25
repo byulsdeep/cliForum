@@ -3,16 +3,20 @@ package view;
 import java.util.Scanner;
 
 public class PageUtils {
-	String makeTransferData() {
-		return null;
+	String getMenu(String[] options) {
+		StringBuffer sb = new StringBuffer();
+
+		for (int i = 0; i < options.length; i++) {
+			sb.append(i + 1 + ". " + options[i]);
+			sb.append((i % 2 == 0) ? "\t" : "\n");
+		}
+		sb.append("0. 종료   ");
+		return sb.toString();
 	}
 	String getTitle(String title) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("==================================\r\n" + 
-				"\r\n" + 
-				"　　　                     "    + title + "\r\n" + 
-				"\r\n" + 
-				"==================================");
+		sb.append("==================================\r\n" + "\r\n" + "　　　                     " + title + "\r\n"
+				+ "\r\n" + "==================================");
 
 		return sb.toString();
 	}
@@ -25,18 +29,11 @@ public class PageUtils {
 				+ "==================================");
 		return sb.toString();
 	}
-	String getMenu(String[] options) {
-		StringBuffer sb = new StringBuffer();
-		
-		for (int i = 0; i < options.length; i++) {
-			sb.append(i + 1 + ". " + options[i]);
-			sb.append((i % 2 == 0) ? "\t" : "\n" );	
-		}
-		sb.append("0. 종료   ");
-		return sb.toString();
-	}
 	void scannerClear(Scanner sc) {
 		if (sc.hasNextLine())
 			sc.nextLine();
+	}
+	String makeTransferData() {
+		return null;
 	}
 }

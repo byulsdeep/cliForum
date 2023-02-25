@@ -18,7 +18,6 @@ public class Controller {
 			for (int i = 0; st.hasMoreTokens(); i++) {
 				tokens[i] = st.nextToken();
 			}
-			
 			switch (tokens[0]) {
 			case "moveSignUp":
 				sup = new SignUpPage();
