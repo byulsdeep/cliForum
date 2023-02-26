@@ -2,6 +2,8 @@ package view;
 
 import java.util.Scanner;
 
+import beans.User;
+
 public class PageUtils {
 	String getMenu(String[] options, boolean exitButton) {
 		StringBuffer sb = new StringBuffer();
@@ -33,7 +35,8 @@ public class PageUtils {
 		if (sc.hasNextLine())
 			sc.nextLine();
 	}
-	String makeTransferData() {
+	String makeTransferData(String jobCode, String[] names, String[] data) {
+		
 		return null;
 	}
 	boolean isNum(String s) {
