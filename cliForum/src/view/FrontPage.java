@@ -15,10 +15,19 @@ public class FrontPage {
 		sc.close();
 	}
 	private void init() {
-		System.out.println(pu.getTitle());
-		System.out.println(pu.getMenu(options));
+		System.out.println(pu.getTitle());		
+		int select = -1;
+		
 		while (true) {
-			switch (sc.nextInt()) {
+			System.out.println(pu.getMenu(options, true));
+			try {
+				select = sc.nextInt();
+			} catch (Exception e) {
+				continue;
+			} finally {
+				pu.scannerClear(sc);
+			}
+			switch (select) {
 			case 1:
 				System.out.println("게시판");
 				break;
@@ -36,8 +45,7 @@ public class FrontPage {
 		}
 	}
 	private void moveSignUp() {
-		Controller ctl = new Controller();
-		ctl.entrance("moveSignUp", pu);
+		(new Controller()).entrance("moveSignUp", pu, sc);
 	}
 	private void moveLogIn() {
 

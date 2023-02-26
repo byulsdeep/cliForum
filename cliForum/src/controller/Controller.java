@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import view.PageUtils;
@@ -10,7 +11,7 @@ public class Controller {
 	SignUpPage sup;
 
 	String message = "잘못된 접근";
-	public String entrance(String data, PageUtils pu) {
+	public String entrance(String data, PageUtils pu, Scanner sc) {
 		// jobCode?item=value&item2=value&item3=value
 		if (data != null) {
 			st = new StringTokenizer(data, "?=&");
@@ -20,8 +21,7 @@ public class Controller {
 			}
 			switch (tokens[0]) {
 			case "moveSignUp":
-				sup = new SignUpPage();
-				sup.init(pu);
+				(new SignUpPage()).init(pu, sc);
 				return null;
 			}
 		}
