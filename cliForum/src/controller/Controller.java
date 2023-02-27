@@ -3,26 +3,33 @@ package controller;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import model.Authentication;
 import view.PageUtils;
 import view.SignUpPage;
 
 public class Controller {
-	StringTokenizer st;
 	SignUpPage sup;
-
+	String jobCode;
 	String message = "잘못된 접근";
 	public String entrance(String data, PageUtils pu, Scanner sc) {
 		// jobCode?item=value&item2=value&item3=value
 		if (data != null) {
-			st = new StringTokenizer(data, "?=&");
-			String[] tokens = new String[st.countTokens()];
-			for (int i = 0; st.hasMoreTokens(); i++) {
-				tokens[i] = st.nextToken();
+			if (data.contains("?")) {
+				jobCode = data.substring(0, data.indexOf("?"));
+			} else {
+				jobCode = data;
 			}
-			switch (tokens[0]) {
+			
+			switch (jobCode) {
 			case "moveSignUp":
 				(new SignUpPage()).init(pu, sc);
-				return null;
+				break;
+			case "isIdUsed":
+				message = (new Authentication()).backController(data);
+				break;
+			case "signUp":
+				(new Authentication()).backController(data);
+				break;
 			}
 		}
 		return message;

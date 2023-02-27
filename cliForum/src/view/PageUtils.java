@@ -2,8 +2,6 @@ package view;
 
 import java.util.Scanner;
 
-import beans.User;
-
 public class PageUtils {
 	String getMenu(String[] options, boolean exitButton) {
 		StringBuffer sb = new StringBuffer();
@@ -35,9 +33,20 @@ public class PageUtils {
 		if (sc.hasNextLine())
 			sc.nextLine();
 	}
+	String makeTransferData(String jobCode, String name, String data) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(jobCode + "?");
+		sb.append(name + "=" + data);
+		return sb.toString();
+	}
 	String makeTransferData(String jobCode, String[] names, String[] data) {
-		
-		return null;
+		StringBuffer sb = new StringBuffer();
+		sb.append(jobCode + "?");
+		for (int i = 0; i < names.length; i++) {
+			sb.append(names[i] + "=");
+			sb.append((i < names.length - 1) ? data[i] + "&" : data[i]); 
+		}
+		return sb.toString();
 	}
 	boolean isNum(String s) {
 		try {
@@ -46,5 +55,28 @@ public class PageUtils {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	boolean isEmpty(String s) {
+		return s.length() == 0 ? true : false;
+	}
+	
+	int confirm(Scanner sc) {
+		String[] options = { "확인", "취소" };
+		System.out.println(getMenu(options, false));
+
+		int select = -1;
+		while (true) {
+			try {
+				select = sc.nextInt();
+				if (select < 1 || select > 2)
+					continue;
+				break;
+			} catch (Exception e) {
+				continue;
+			} finally {
+				scannerClear(sc);
+			}
+		}
+		return select;
 	}
 }

@@ -1,5 +1,4 @@
 2023-02-26 1일차
-
 세미 프로젝트 연습 겸 쿵스보이 블로그를 보고 프로젝트 종목 중 첫번째인 CLI 게시판을 만들어보기로 했다.
 인증 기능과 게시판 기능은 필수로 만들것이고, 여유되면 여러 기능을 추가하고 게시판이 아닌 커뮤니티 사이트로 만들 예정.
 
@@ -28,3 +27,34 @@ PageUtils라는 클라스에 view에서 공통적으로 사용할 함수들 작�
 
 학원, 집 왔다갔다 작업하기 위해 깃에 올려뒀다.
 https://github.com/byulsdeep/cliForum
+
+2023-02-27 2일차
+회원가입 페이지에서 유저 정보 입력 받기 기능 추가
+유효성 확인 어느정도 추가
+
+2023-02-28 3일차
+프로젝트 완성 기한은 다음주 수요일 (3월8일) 까지.
+연습용으로 시작한 이 프로젝트를 제출용으로 완성할 예정.
+
+DAO 틀 작성.
+view에서 사용할 함수를 위한  PageUtils 클라스와 마찬가지로,
+model에서 사용할 함수를 모아둘 ServiceUtils 클라스 작성.
+model들과 view들의 규칙을 정의한 ModelRules와 ViewRules 인터페이스 추가.
+FileReader를 이용한 아이디 중복 확인 기능 추가 
+-> 첫번째 view-controller-model-database 풀 사이클 완성.
+조우한 문제점:
+	중복 확인 기능이 안됨:
+		원인: 
+			/database/users.txt 상대경로가 왜인지 작동이 안됨.
+			catch문에 e.printStackTrace()를 안 써놓아서 오류 찾는데 오래걸림.
+		해결:
+			절대경로로 변경.
+			String ap = new File("").getAbsolutePath();
+			file = new File(ap + fileName);
+	알 수 없는 sysout이 계속 출력됨:
+		원인:
+			controller의 switch문 break 안 걸은 항목이 있었음.
+		해결:
+			break;
+			
+점점 스케일이 커져서 생각보다 쉽지 않다.

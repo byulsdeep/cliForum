@@ -1,13 +1,13 @@
 package beans;
 
-public class User {
+public class AuthBean {
 	private String id;
 	private String pw;
 	private String birthday;
-	private int recoveryQ;
+	private String recoveryQ;
 	private String recoveryA;
 	
-	public User(String id, String pw, String birthday, int recoveryQ, String recoveryA) {
+	public AuthBean(String id, String pw, String birthday, String recoveryQ, String recoveryA) {
 		this.id = id;
 		this.pw = pw;
 		this.birthday = birthday;
@@ -32,10 +32,10 @@ public class User {
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-	public int getRecoveryQ() {
+	public String getRecoveryQ() {
 		return recoveryQ;
 	}
-	public void setRecoveryQ(int recoveryQ) {
+	public void setRecoveryQ(String recoveryQ) {
 		this.recoveryQ = recoveryQ;
 	}
 	public String getRecoveryA() {

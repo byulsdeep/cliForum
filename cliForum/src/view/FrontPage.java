@@ -3,18 +3,19 @@ package view;
 import java.util.Scanner;
 
 import controller.Controller;
+import interfaces.ViewRules;
 
-public class FrontPage {
+public class FrontPage implements ViewRules {
 	Scanner sc;
 	PageUtils pu;
 	String[] options = { "게시판  ", "로그인  ", "회원가입 " };
 	public FrontPage() {
-		sc = new Scanner(System.in);
-		pu = new PageUtils();
-		init();
+		init(new PageUtils(), new Scanner(System.in));
 		sc.close();
 	}
-	private void init() {
+	public void init(PageUtils pu, Scanner sc) {
+		this.sc = sc;
+		this.pu = pu;
 		System.out.println(pu.getTitle());		
 		int select = -1;
 		

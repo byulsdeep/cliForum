@@ -2,7 +2,7 @@ package view;
 
 import java.util.Scanner;
 
-import beans.User;
+import controller.Controller;
 
 public class SignUpPage {
 
@@ -12,15 +12,27 @@ public class SignUpPage {
 	}
 
 	void signUp(PageUtils pu, Scanner sc) {
-		String[] names = {
-			"id", "pw", "birthday", "recoveryQ", "recoveryA"	
-		};
+		String[] names = { "id", "pw", "birthday", "recoveryQ", "recoveryA" };
 		String[] data = new String[5];
-
-		System.out.println("아이디: ");
-		data[0] = sc.nextLine().trim();
-		// 파일 쓰기 기능 완성하면 중복체크 기능 추가
-
+		String[] options = { "확인", "취소" };
+		int select = -1;
+		String clientData;
+		while (true) {
+			System.out.println("아이디: ");
+			data[0] = sc.nextLine().trim();
+			if (pu.isEmpty(data[0])) continue;
+			// 파일 쓰기 기능 완성하면 중복체크 기능 추가
+			clientData = pu.makeTransferData("isIdUsed", names[0], data[0]);
+			String isIdUsed = new Controller().entrance(clientData, null, null);
+			if (isIdUsed.equals("true")) {
+				System.out.println("이미 사용중인 아이디입니다.");
+			} else {
+				System.out.println("사용 가능한 아이디입니다.");		
+				select = pu.confirm(sc);
+				if (select == 1) break;
+			}
+		}
+		
 		while (true) {
 			System.out.println("비밀번호: ");
 			data[1] = sc.nextLine().trim();
@@ -66,9 +78,7 @@ public class SignUpPage {
 		System.out.println(recoveryQ[recoveryQIdx - 1]);
 		data[4] = sc.nextLine().trim();
 
-		String[] options = {
-			"확인", "취소"	
-		};
+		//String[] options = { "확인", "취소" };
 		StringBuffer sb = new StringBuffer();
 		sb.append("아이디: " + data[0] + "\n");
 		sb.append("비밀번호: ");
@@ -81,23 +91,12 @@ public class SignUpPage {
 		sb.append(data[4] + "\n");
 		sb.append("정보를 확인해주세요.");
 		System.out.println(sb);
-		System.out.println(pu.getMenu(options, false));
 		
-		int select = -1;
-		while (true) {
-			try {
-				select = sc.nextInt();
-				if (select < 1 || select > 2)
-					continue;
-				break;
-			} catch (Exception e) {
-				continue;
-			} finally {
-				pu.scannerClear(sc);
-			}
-		}
+		select = pu.confirm(sc);
+		
 		if (select == 1) {
-			pu.makeTransferData("signUp", names, data);
+			clientData = pu.makeTransferData("signUp", names, data);
+			(new Controller()).entrance(clientData, null, null);
 		}
 	}
 }
