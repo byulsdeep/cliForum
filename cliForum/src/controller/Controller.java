@@ -1,37 +1,50 @@
 package controller;
 
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 import model.Authentication;
-import view.PageUtils;
+import model.Forum;
+import utilities.ProjectUtils;
+import view.ForumPage;
+import view.LogInPage;
 import view.SignUpPage;
 
 public class Controller {
 	SignUpPage sup;
 	String jobCode;
 	String message = "잘못된 접근";
-	public String entrance(String data, PageUtils pu, Scanner sc) {
+	public String entrance(String data, ProjectUtils pu, Scanner sc) {
 		// jobCode?item=value&item2=value&item3=value
 		if (data != null) {
-			if (data.contains("?")) {
-				jobCode = data.substring(0, data.indexOf("?"));
-			} else {
-				jobCode = data;
-			}
-			
+			jobCode = pu.getJobCode(data);
+			System.out.println("controller data : " + data);
 			switch (jobCode) {
+			
+			/* frontend*/
 			case "moveSignUp":
-				(new SignUpPage()).init(pu, sc);
+				new SignUpPage().init(null, pu, sc);
 				break;
+			case "moveLogIn":
+				message = new LogInPage().init(null, pu, sc);
+				break;
+			case "moveForum":
+				System.out.println(data);
+				new ForumPage().init(data, pu, sc);
+				break;
+			/* backend */
 			case "isIdUsed":
-				message = (new Authentication()).backController(data);
-				break;
 			case "signUp":
-				(new Authentication()).backController(data);
+			case "logIn":		
+				message = new Authentication().backController(data, pu);		
+				break;
+			case "getPosts":
+			case "addPost":
+			case "getMaxPostIdx":
+				message = new Forum().backController(data, pu);
 				break;
 			}
 		}
+		//System.out.println("contollerMessage: " + message);
 		return message;
 	}
 }

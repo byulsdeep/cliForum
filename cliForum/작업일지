@@ -58,3 +58,26 @@ FileReader를 이용한 아이디 중복 확인 기능 추가
 			break;
 			
 점점 스케일이 커져서 생각보다 쉽지 않다.
+
+2023-03-02 4,5일차
+어제 부터 이틀간 밤샘작업 중
+회원가입 유효성 확인 추가 등 마무리
+회원가입하면서 만든 패턴으로 로그인도 마무리
+PageUtils와 ServiceUtils 클라스 ProjectUtils로 통합
+ViewRules -> PageRules, ModelRules -> ServiceRules로 이름변경
+신규 클래스 :
+	Authentication - 회원가입, 로그인 백엔드
+	PostBean - 게시글 캡슐화용 클래스
+	ForumPage - 게시판 프론트엔드
+	Forum - 게시판 백엔드
+신규 db :
+	posts.txt - 게시판 db
+게시판 글 쓰기, 글 목록 불러오기까지 완성
+게시글 저장 양식:
+	행당 한 게시글 정보
+	열은 "|" 로 분리
+	사용자가 입력한 "\n"는 "<newLine>"으로 저장하고
+	불러올때 "\n"으로 replace 함
+	Json 복습하기 귀찮아서 선택한 방식
+배운점 : 
+	BufferedWriter를 Writer 보다 먼저 close 해야한다.

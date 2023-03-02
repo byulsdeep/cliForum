@@ -7,12 +7,8 @@ public class AuthBean {
 	private String recoveryQ;
 	private String recoveryA;
 	
-	public AuthBean(String id, String pw, String birthday, String recoveryQ, String recoveryA) {
-		this.id = id;
-		this.pw = pw;
-		this.birthday = birthday;
-		this.recoveryQ = recoveryQ;
-		this.recoveryA = recoveryA;
+	public String toString() {
+		return id + "," + pw + "," + birthday + "," + recoveryQ + "," + recoveryA;
 	}
 	public String getId() {
 		return id;

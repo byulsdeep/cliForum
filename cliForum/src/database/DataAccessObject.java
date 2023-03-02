@@ -5,6 +5,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import utilities.ProjectUtils;
 
 public class DataAccessObject {
 	File file;
@@ -13,7 +18,7 @@ public class DataAccessObject {
 	BufferedReader bReader;
 	BufferedWriter bWriter;
 	
-	public String getUsersId() {
+	public String getIdList() {
 		StringBuffer sb = new StringBuffer();
 		String record = null;
 		try {
@@ -26,6 +31,81 @@ public class DataAccessObject {
 		} catch (Exception e) {
 		}
 		return sb.toString();
+	}
+	public String getUserInfo(String[][] exData) {
+		String record = null;
+		String[] exRecord;
+		String userInfo = null;
+		try {
+			while ((record = bReader.readLine()) != null) {
+				exRecord = record.split(",");
+				if (exData[0][1].equals(exRecord[0]) && exData[1][1].equals(exRecord[1])) {
+					userInfo = exData[0][1];
+					break;
+				}				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userInfo;
+	}
+	public String getPosts(ProjectUtils pu) {
+		String record = null;
+		String posts = "";
+		try {
+			while ((record = bReader.readLine()) != null) {
+				posts += record;
+				posts += "\n";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return posts;
+	}
+	public int getMaxPostIdx(ProjectUtils pu) {
+		String record = null;
+		List<Integer> idxs = new ArrayList<>();
+		try {
+			while ((record = bReader.readLine()) != null) {
+				idxs.add(Integer.parseInt(record.substring(0, record.indexOf("|"))));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(idxs);
+		return idxs.size() < 1 ? 1 : Collections.max(idxs) + 1;
+	}
+	public boolean insPost(String[][] exData) {
+		boolean isWrite = false;
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < exData.length; i++) {
+			sb.append(exData[i][1]);
+			sb.append((i < exData.length - 1) ? "|" : "");
+		}
+		try {
+			System.out.println(sb);
+			bWriter.write(sb.toString());
+			bWriter.newLine();
+			isWrite = true;
+		} catch (Exception e) {
+		}
+		return isWrite;
+	}
+	public boolean insUser(String[][] exData) {
+		boolean isWrite = false;
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < exData.length; i++) {
+			sb.append(exData[i][1]);
+			sb.append((i < exData.length - 1) ? "," : "");
+		}
+		try {
+			System.out.println(sb);
+			bWriter.write(sb.toString());
+			bWriter.newLine();
+			isWrite = true;
+		} catch (Exception e) {
+		}
+		return isWrite;
 	}
 
 	public boolean fileConnected(boolean readOrWrite, String fileName, boolean append) {
@@ -54,28 +134,42 @@ public class DataAccessObject {
 	public void fileClose(boolean readOrWrite) {
 		if (readOrWrite) {
 			try {
-				if (reader != null)
-					reader.close();
-			} catch (Exception e) {
+				if (bReader != null) {
+					bReader.close();
+					System.out.println("bReader closed");
+				}
+			} catch (Exception e2) {
+				System.out.println("bReader not closed properly");
+				e2.printStackTrace();
 			}
 			try {
-				if (bReader != null)
-					bReader.close();
-			} catch (Exception e2) {
+				if (reader != null) {
+					reader.close();
+					System.out.println("reader closed");
+				}
+			} catch (Exception e) {
+				System.out.println("reader not closed properly");
+				e.printStackTrace();
 			}
-
 		} else {
 			try {
-				if (writer != null)
-					writer.close();
-			} catch (Exception e) {
+				if (bWriter != null) {
+					bWriter.close();
+					System.out.println("bWriter closed");
+				}
+			} catch (Exception e2) {
+				System.out.println("bWriter not closed Properly");
+				e2.printStackTrace();
 			}
 			try {
-				if (bWriter != null)
-					bWriter.close();
-			} catch (Exception e2) {
+				if (writer != null) {
+					writer.close();
+					System.out.println("writer closed");
+				}
+			} catch (Exception e) {
+				System.out.println("writer not closed properly");
+				e.printStackTrace();
 			}
-
 		}
 	}
 }
