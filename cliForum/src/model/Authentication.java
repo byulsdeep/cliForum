@@ -23,13 +23,10 @@ public class Authentication implements ServiceRules {
 				message = logIn(data, pu);
 			}
 		}
-		System.out.println("loginMessage" + message);
 		return message;
 	}
 	private String logIn(String data, ProjectUtils pu) {
 		String message = null;
-		System.out.println(pu);
-		System.out.println(data);
 		String[][] exData = pu.extractData(data);
 		DataAccessObject dao = new DataAccessObject();
 		if (dao.fileConnected(true, "/src/database/users.txt", false)) {

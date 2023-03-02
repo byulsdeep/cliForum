@@ -7,6 +7,7 @@ import model.Forum;
 import utilities.ProjectUtils;
 import view.ForumPage;
 import view.LogInPage;
+import view.MyPage;
 import view.SignUpPage;
 
 public class Controller {
@@ -17,7 +18,6 @@ public class Controller {
 		// jobCode?item=value&item2=value&item3=value
 		if (data != null) {
 			jobCode = pu.getJobCode(data);
-			System.out.println("controller data : " + data);
 			switch (jobCode) {
 			
 			/* frontend*/
@@ -28,8 +28,10 @@ public class Controller {
 				message = new LogInPage().init(null, pu, sc);
 				break;
 			case "moveForum":
-				System.out.println(data);
 				new ForumPage().init(data, pu, sc);
+				break;
+			case "moveMyPage":
+				new MyPage().init(data, pu, sc);
 				break;
 			/* backend */
 			case "isIdUsed":
@@ -40,6 +42,7 @@ public class Controller {
 			case "getPosts":
 			case "addPost":
 			case "getMaxPostIdx":
+			case "deletePost":
 				message = new Forum().backController(data, pu);
 				break;
 			}

@@ -29,17 +29,18 @@ public class LogInPage implements PageRules {
 				break;
 			System.out.println("비밀번호: ");
 			data[1] = sc.next();
-			pu.confirm();	
-			pu.confirmInput(isExit, sc);
-			clientData = pu.makeTransferData("logIn", names, data);
-			serverMessage = new Controller().entrance(clientData, pu, null);
-			System.out.println("loginPage message " + serverMessage);
-			if (serverMessage != null) {
-				System.out.println(pu.getTitle());
-				System.out.println(pu.getAccessInfo(serverMessage));
-				break;
-			} else {
-				System.out.println("인증 정보가 잘못되었습니다.");
+			pu.confirm();
+			
+			if (!(isExit = pu.confirmInput(isExit, sc))) {
+				clientData = pu.makeTransferData("logIn", names, data);
+				serverMessage = new Controller().entrance(clientData, pu, null);
+				if (serverMessage != null) {
+					System.out.println(pu.getTitle());
+					System.out.println(pu.getAccessInfo(serverMessage));
+					break;
+				} else {
+					System.out.println("인증 정보가 잘못되었습니다.");
+				}
 			}
 		}
 		return serverMessage;

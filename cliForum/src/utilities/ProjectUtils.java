@@ -1,9 +1,17 @@
 package utilities;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class ProjectUtils {
+	public String getDate() {
+		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+	}
+	public String getTime() {
+		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+	}
 	public int getTagIndex(String tag) {
 		tag = "<" + tag + ">";
 		return tag.indexOf(tag) + tag.length();
@@ -24,7 +32,7 @@ public class ProjectUtils {
 	}
 	public String getAccessInfo(String userInfo) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("                 " + userInfo + "님, 어서오세요!\r\n" + "==================================");
+		sb.append("                 " + userInfo + "님, 어서오세요!");
 		return sb.toString();
 	}
 	public String[][] extractData(String data) {

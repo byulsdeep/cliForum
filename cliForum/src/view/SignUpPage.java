@@ -34,7 +34,7 @@ public class SignUpPage implements PageRules {
 //				continue;
 			// 파일 쓰기 기능 완성하면 중복체크 기능 추가
 			clientData = pu.makeTransferData("isIdUsed", names[0], data[0]);
-			serverMessage = new Controller().entrance(clientData, null, null);
+			serverMessage = new Controller().entrance(clientData, pu, null);
 			if (serverMessage != null) {
 				System.out.println("이미 사용중인 아이디입니다.");
 			} else {

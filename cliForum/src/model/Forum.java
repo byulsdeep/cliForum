@@ -13,10 +13,13 @@ public class Forum implements ServiceRules {
 		String jobCode;
 		if (data != null) {
 			jobCode = pu.getJobCode(data);
-			
+
 			switch (jobCode) {
+			case "deletePost":
+				message = deletePost(data, pu);
+				break;
 			case "getPosts":
-				message = getPosts(data, pu);
+				message = getPosts(pu);
 				break;
 			case "addPost":
 				message = addPost(data, pu);
@@ -28,16 +31,34 @@ public class Forum implements ServiceRules {
 		}
 		return message;
 	}
-	public String getPosts(String data, ProjectUtils pu) {
-		System.out.println("Forum/getPosts");
+	public String deletePost(String data, ProjectUtils pu) {
 		String message = null;
-		String[][] posts;
-		StringTokenizer st;
+		String[][] exData = pu.extractData(data);
+		String idx = exData[0][1];
+		StringTokenizer st = new StringTokenizer(getPosts(pu), "\n");
+		String token;
+		StringBuilder sb = new StringBuilder();
+		while (st.hasMoreTokens()) {
+			if ((token = st.nextToken()).substring(0, token.indexOf("|")).equals(idx)) {
+				sb.append("");
+			} else {
+				sb.append(token + "\n");
+			}
+		}	
+		DataAccessObject dao = new DataAccessObject();
+		if (dao.fileConnected(false, "/src/database/posts.txt", false)) {
+			message = dao.insPost(sb.toString()) ? "true" : null;
+		} else {
+		}
+		dao.fileClose(false);
+		return message;
+	}
+	public String getPosts(ProjectUtils pu) {
+		String message = null;
 		DataAccessObject dao = new DataAccessObject();
 		if (dao.fileConnected(true, "/src/database/posts.txt", false)) {
-			System.out.println("fileConnected");
-			message = dao.getPosts(pu);			
-		}	
+			message = dao.getPosts(pu);
+		}
 		dao.fileClose(true);
 		return message;
 	}
@@ -46,12 +67,12 @@ public class Forum implements ServiceRules {
 		DataAccessObject dao = new DataAccessObject();
 		if (dao.fileConnected(true, "/src/database/posts.txt", false)) {
 			message = String.valueOf(dao.getMaxPostIdx(pu));
-		}	
+		}
 		dao.fileClose(true);
 		return message;
 	}
 	public String addPost(String data, ProjectUtils pu) {
-		//addPost?글번호=1작성자=admin&제목=1&내용=1
+		// addPost?글번호=1작성자=admin&제목=1&내용=1
 		String message = null;
 		String[][] exData = pu.extractData(data);
 		DataAccessObject dao = new DataAccessObject();
@@ -59,7 +80,6 @@ public class Forum implements ServiceRules {
 			message = dao.insPost(exData) ? "true" : null;
 		}
 		dao.fileClose(false);
-		System.out.println(data);
 		return message;
 	}
 }

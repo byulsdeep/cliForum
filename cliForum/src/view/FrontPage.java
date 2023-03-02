@@ -17,7 +17,7 @@ public class FrontPage implements PageRules {
 	}
 	// 생성자에서 스캐너와 유틸을 생성하지 않은건 다른 페이지들과
 	// 규정을 공유하기 위해 -> Interface PageRules
-	public String init(String userInfo, ProjectUtils pu, Scanner sc) {
+	public String init(String data, ProjectUtils pu, Scanner sc) {
 		// userInfo == null, 여기서 안받음
 		this.sc = sc;
 		this.pu = pu;	
@@ -63,7 +63,7 @@ public class FrontPage implements PageRules {
 		}
 	}
 	private void moveMyPage() {
-		
+		new Controller().entrance("moveMyPage?id=" + userInfo, pu, sc);
 	}
 	private void moveLogOut() {
 		
@@ -73,14 +73,11 @@ public class FrontPage implements PageRules {
 	}
 	private void moveLogIn() {
 		userInfo = new Controller().entrance("moveLogIn", pu, sc);
-		System.out.println("moveLogIn UserInfo" + userInfo);
 	}
 	private void moveForum() {
 		if (userInfo == null) {
 			new Controller().entrance("moveForum", pu, sc);
 		} else {
-			System.out.println(userInfo);
-			System.out.println("moveForum?id=" + userInfo);
 			new Controller().entrance("moveForum?id=" + userInfo, pu, sc);
 		}
 		

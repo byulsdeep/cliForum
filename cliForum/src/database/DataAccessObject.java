@@ -72,8 +72,17 @@ public class DataAccessObject {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(idxs);
 		return idxs.size() < 1 ? 1 : Collections.max(idxs) + 1;
+	}
+	public boolean insPost(String data) {
+		boolean isWrite = false;
+		try {
+			bWriter.write(data);
+			isWrite = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return isWrite;
 	}
 	public boolean insPost(String[][] exData) {
 		boolean isWrite = false;
@@ -83,7 +92,6 @@ public class DataAccessObject {
 			sb.append((i < exData.length - 1) ? "|" : "");
 		}
 		try {
-			System.out.println(sb);
 			bWriter.write(sb.toString());
 			bWriter.newLine();
 			isWrite = true;
@@ -99,7 +107,6 @@ public class DataAccessObject {
 			sb.append((i < exData.length - 1) ? "," : "");
 		}
 		try {
-			System.out.println(sb);
 			bWriter.write(sb.toString());
 			bWriter.newLine();
 			isWrite = true;
@@ -136,38 +143,30 @@ public class DataAccessObject {
 			try {
 				if (bReader != null) {
 					bReader.close();
-					System.out.println("bReader closed");
 				}
 			} catch (Exception e2) {
-				System.out.println("bReader not closed properly");
 				e2.printStackTrace();
 			}
 			try {
 				if (reader != null) {
 					reader.close();
-					System.out.println("reader closed");
 				}
 			} catch (Exception e) {
-				System.out.println("reader not closed properly");
 				e.printStackTrace();
 			}
 		} else {
 			try {
 				if (bWriter != null) {
 					bWriter.close();
-					System.out.println("bWriter closed");
 				}
 			} catch (Exception e2) {
-				System.out.println("bWriter not closed Properly");
 				e2.printStackTrace();
 			}
 			try {
 				if (writer != null) {
 					writer.close();
-					System.out.println("writer closed");
 				}
 			} catch (Exception e) {
-				System.out.println("writer not closed properly");
 				e.printStackTrace();
 			}
 		}
