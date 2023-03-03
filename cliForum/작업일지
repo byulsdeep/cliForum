@@ -95,4 +95,27 @@ ViewRules -> PageRules, ModelRules -> ServiceRules로 이름변경
 배운점:
 	파일리더와 라이터로 파일 접근 중일 때
 	리더, 라이터 순차로 close하면 파일 내용 증발함
+
+2023-03-04 7일차
+공부를 하면서 드디어 프로세스가 머리속에 만들어짐.
+기존 패턴: 
+	뷰-컨트롤러-모델-DB - 스레드 1개
+새 패턴   : 
+	Server.java - 무한으로 연결요청 계속 받는 서버.
+	FrongEnd.java - 서버에 연결요청을 하는 클라이언트.
+	Controller.java - 서버에 연결되면 클라이언트에게 생성해주는 서비스 스레드
+
+ 	뷰-소켓-컨트롤러-모델-DB x n개 스레드 생성
+
+배운점:
+	"\n"을 포함해서 전송하려면 PrintWriter는 안되고 DataOutputStream.writeUTF를 쓰면된다.
+	스캐너의 nextInt 대신 nextLine을 쓰면 try catch를 줄일수 있다.
+	스캐너 외에 InputStreamReader도 System.in을 파라미터로 넣으면 키보드 입력을 받을 수 있다.
+할일:
+	여러 클라이언트 연결중, 새로운 글이 올라오면 모든 클라이언트에게 그 메시지를 전송하는 로직을 만들 수 있을까?
+	FrontEnd 클래스 과부하. 가능하면 다른 클래스로 분산.
+	DAO 함수 데이터 타입 정리.
+	AuthBean 사용할만한 곳 찾아서 활용.
+	 
+  
 	
